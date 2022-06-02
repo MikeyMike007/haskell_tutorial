@@ -1,0 +1,43 @@
+-- # The Function Type Class
+--
+-- - The Functor type class is for things that can be mapped over
+--
+-- - For example, the list type is part of the functor type class
+--
+-- - The Functor type class is defined in the following way
+--
+--   class Functor f where
+--   fmap :: (a -> b) -> f a -> f b
+--
+-- - fmap doesnt provide any default implementation
+--
+-- - The f is not a concrete type (a type that a value can hold, like Int,
+--   Bool, or Maybe String) but a type constructor that takes one type
+--   parameter (Example: Maybe Int is a concrete type, but Maybe is a type
+--   constructor that takes one type as the parameter)
+--
+-- - fmap takes a function from one type to another and a functor value applied
+--   with one type and returns a functor value applied with another type.
+--
+-- - The type signature of the map function looks like following:
+--
+--   map :: (a -> b) -> [a] -> [b]
+--
+-- - The reason is that it almost looks the same is how the list is an instance
+--   of the Functor type class:
+--
+--   instance Functor [] where
+--      fmap = map
+--
+-- - Notice how we didnt write instance Functor [a] where. This is because f
+--   must be a type constructor that takes one type. [a] is already a concrete
+--   type while [] is a type constructor that takes one type and can produce
+--   types such as [Int], [String], or even [[String]]
+--
+-- - See examples below:
+--
+--   ghci> fmap (*2) [1..3]
+--   [2,4,6]
+--
+--   ghci> map (*2) [1..3]
+--   [2,4,6]
