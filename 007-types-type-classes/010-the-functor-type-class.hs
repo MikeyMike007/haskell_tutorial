@@ -41,3 +41,96 @@
 --
 --   ghci> map (*2) [1..3]
 --   [2,4,6]
+--
+-- ## Maybe as an Functor
+--
+-- - Types that can act like a box can act like functors. You can think of a
+--   list as a box that can be empty or have somethign inside it, including
+--   another box.
+--
+-- - Maybe a can also be seen as a box i.e. it can hold Nothing or it can
+--   contain one item.
+--
+-- - Here is how Maybe is a functor:
+--
+--   instance Functor Maybe where
+--     fmap f (Just x) = Just (f x)
+--     fmap f Nothing = Nothing
+--
+-- - Notice how we wrote instance Functor Maybe where instead of
+--   instance Functor (Maybe m) where , as we did when we were dealing with
+--   YesNo. Functor wants a type constructor that takes one type, and not a
+--   concrete type.
+--
+-- - Some examples:
+--
+--   ghci> fmap (++ " HEY GUYS IM INSIDE THE JUST") (Just "Something serious.")
+--   Just "Something serious. HEY GUYS IM INSIDE THE JUST"
+--
+--   ghci> fmap (++ " HEY GUYS IM INSIDE THE JUST") Nothing
+--   Nothing
+--
+--   ghci> fmap (*2) (Just 200)
+--   Just 400
+--
+--   ghci> fmap (*2) Nothing
+--   Nothing
+--
+-- ## Trees are Functors to
+--
+--    instance Functor Tree where
+--      fmap f EmptyTree = EmptyTree
+--      fmap f (Node x left right) = Node (f x) (fmap f left) (fmap f right)
+--
+--    Examples:
+--
+--    ghci> fmap (*2) EmptyTree
+--    EmptyTree
+--
+--    ghci> fmap (*4) (foldr treeInsert EmptyTree [5,7,3])
+--    Node 20 (Node 12 EmptyTree EmptyTree) (Node 28 EmptyTree EmptyTree)
+--
+--
+-- ## Either a As a Functor
+--
+-- - The Functor type class wants a type constructor that takes only one type
+--   parameter, but Either takes two. The solution to this is to partially apply
+--   Either by feeding it only one parameter, so that it has one free parameter.
+--
+--   instance Functor (Either a) where
+--     fmap f (Right x) = Right (f x)
+--     fmap f (Left x) = Left x
+--
+-- - You can see how Either a was made an instance instead of Just Either.
+--   Thats because Either a is a type constructor that takes one parameter,
+--   whereas Either takes two.
+--
+-- - If fmap were specifically for Either a, the type signature would be this:
+--
+--   (b -> c) -> Either a b -> Either a c
+--
+--   Because this is the same as following:
+--
+--   (b -> c) -> (Either a) b -> (Either a) c
+--
+--   The function is mapped in the case of a Right value constructor, but it
+--   isn’t mapped in the case of a Left . Why is that? Well, looking back at how the
+--   Either a b type is defined, we see this:
+--
+--   data Either a b = Left a | Right b
+--
+--   If we wanted to map one function over both of them, a and b would
+--   need to be the same type. Think about it: If we try to map a function that
+--   takes a string and returns a string, and b is a string but a is a number, it won’t
+--   really work out. Also, considering what fmap ’s type would be if it operated
+--   only on Either a b values, we can see that the first parameter must remain
+--   the same, while the second one can change, and the first parameter is actual-
+--   ized by the Left value constructor.
+--
+--   This also goes nicely with our box analogy if we think of the Left part as
+--   sort of an empty box with an error message written on the side telling us why
+--   it’s empty.
+--
+--   Maps from Data.Map can also be made into functor values, because they
+--   hold values (or not!). In the case of Map k v , fmap will map a function v -> v'
+--   over a map of type Map k v and return a map of type Map k v'
