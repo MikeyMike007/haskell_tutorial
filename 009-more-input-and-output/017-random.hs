@@ -1,0 +1,60 @@
+-- # More random functions
+-- - Function randoms:
+--
+--   Takes a generator and returns an infinite sequence of values based on that generator.
+--
+--   ghci> take 5 $ randoms (mkStdGen 11) :: [Int]
+--   [-1807975507,545074951,-1015194702,-1622477312,-502893664]
+--
+--   ghci> take 5 $ randoms (mkStdGen 11) :: [Bool]
+--   [True,True,True,True,False]
+--
+--   ghci> take 5 $ randoms (mkStdGen 11) :: [Float]
+--   [7.904789e-2,0.62691015,0.26363158,0.12223756,0.38291094]
+--
+-- - Why doesn’t randoms return a new generator as well as a list? We could
+--   implement the randoms function very easily like this:
+--
+--   1) Recursion
+--
+--   randoms' :: (RandomGen g, Random a) => g -> [a]
+--   randoms' gen = let (value, newGen) = random gen in value:randoms' newGen
+--
+--   2) Other
+--
+--  finiteRandoms :: (RandomGen g, Random a, Num n) => n -> g -> ([a], g)
+--  finiteRandoms 0 gen = ([], gen)
+--  finiteRandoms n gen =
+--    let (value, newGen) = random gen
+--        (restOfList, finalGen) = finiteRandoms (n-1) newGen
+--    in (value:restOfList, finalGen)
+--
+--   Again, this is a recursive definition. We say that if we want zero numbers,
+--   we just return an empty list and the generator that was given to us. For any
+--   other number of random values, we first get one random number and a new
+--   generator. That will be the head. Then we say that the tail will be n - 1 num-
+--   bers generated with the new generator. Then we return the head and the rest of
+--   the list joined and the final generator that we got from getting the n - 1
+--   random numbers.
+--
+-- - What if we want a random value in some sort of range
+--
+--   Use randomR
+--
+--   randomR :: (RandomGen g, Random a) :: (a, a) -> g -> (a, g)
+--
+--   This means that it’s kind of like random , but it takes as its first parameter
+--   a pair of values that set the lower and upper bounds, and the final value pro-
+--   duced will be within those bounds.
+--
+--   ghci> randomR (1,6) (mkStdGen 359353)
+--   (6,1494289578 40692)
+--
+--   ghci> randomR (1,6) (mkStdGen 35935335)
+--   (3,1250031057 40692)
+--
+-- - There’s also randomRs , which produces a stream of random values within
+--   our defined ranges. Check this out:
+--
+--   ghci> take 10 $ randomRs ('a','z') (mkStdGen 3) :: [Char]
+--   "ndkxbvmomg"

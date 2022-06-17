@@ -1,0 +1,20 @@
+-- - Because mapping a function that returns an I/O action over a list and then
+--   sequencing it is so common, the utility functions mapM and mapM_ were intro-
+--   duced. mapM takes a function and a list, maps the function over the list, and
+--   then sequences it. mapM_ does the same thing, but it throws away the result
+--   later. We usually use mapM_ when we don’t care what result our sequenced
+--   I/O actions have. Here’s an example of mapM
+--
+--  ghci> mapM print [1,2,3]
+--   1
+--   2
+--   3
+--   [(),(),()]
+--
+--  But we don’t care about the list of three units at the end, so it’s better to
+--  use this form:
+--
+--  ghci> mapM_ print [1,2,3]
+--   1
+--   2
+--   3

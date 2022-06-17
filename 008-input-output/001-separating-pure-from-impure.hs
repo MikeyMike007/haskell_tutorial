@@ -1,0 +1,25 @@
+-- # Separating the Pure from the impure
+--
+-- - Instead of giving the computer a series of steps to execute, you give it def-
+--   initions of what certain things are
+
+-- - A function isn’t allowed to have side effects. A function can give us back only
+--   some result based on the parameters we supplied to it. If a function is called
+--   two times with the same parameters, it must return the same result.
+--
+-- - The fact that functions cannot change state—like updating global variables, for
+--   example—is good, because it helps us reason about our programs. However,
+--   there’s one problem with this: If a function can’t change anything in the
+--   world, how is it supposed to tell us what it calculated? To do that, it must
+--   change the state of an output device (usually the state of the screen), which
+--   then emits photons that travel to our brain, which changes the state of our
+--   mind, man.
+--
+-- - But don’t despair, all is not lost. Haskell has a really clever system for
+--   dealing with functions that have side effects. It neatly separates the part of
+--   our program that is pure and the part of our program that is impure, which does
+--   all the dirty work like talking to the keyboard and the screen. With those two
+--   parts separated, we can still reason about our pure program and take advantage
+--   of all the things that purity offers—like laziness, robustness, and
+--   composability—while easily communicating with the outside world. You’ll see
+--   this at work in this chapter.
