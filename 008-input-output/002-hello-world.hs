@@ -1,6 +1,7 @@
 -- # Hello World
 
 -- - You can compile following program with ghc --make ./002-hello-world.hs
+main :: IO ()
 main = putStrLn "Hello World"
 
 -- - Please note the following examples

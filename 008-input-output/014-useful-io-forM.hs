@@ -5,6 +5,7 @@ import Control.Monad
 --   over that list, which is then sequenced. Why is that useful? Well, with some
 --   creative use of lambdas and do notation, we can do stuff like this:
 
+main :: IO [()]
 main = do
   colors <-
     forM

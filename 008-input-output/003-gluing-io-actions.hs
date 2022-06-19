@@ -122,6 +122,7 @@ import Data.Char
 --   just called the getLine I/O action a different name, and we would still need
 --   to run it through a <- to perform it and bind its result.
 
+main :: IO ()
 main = do
   putStrLn "Whats your first name?"
   firstName <- getLine

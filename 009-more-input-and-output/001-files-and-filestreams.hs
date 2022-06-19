@@ -8,9 +8,10 @@
 --    What's with that airplane food, huh?
 --    It's so small, tasteless
 
-import Control.Monad
-import Data.Char
+import Control.Monad ( forever )
+import Data.Char ( toUpper )
 
+main :: IO b
 main = forever $ do
   input <- getLine
   putStrLn $ map toUpper input

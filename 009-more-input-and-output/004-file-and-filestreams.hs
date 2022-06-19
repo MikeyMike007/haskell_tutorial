@@ -2,6 +2,7 @@
 -- an I/O action that will take some input, run that function on it, and then
 -- print out the function’s result.
 
+main :: IO ()
 main = interact shortLinesOnly
 
 shortLinesOnly :: String -> String

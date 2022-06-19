@@ -3,6 +3,7 @@
 --   action yields will be a list of the results of all the I/O actions that were per-
 --   formed.
 
+main :: IO ()
 main = do
   rs <- sequence [getLine, getLine, getLine]
   print rs

@@ -4,6 +4,7 @@ import Control.Monad
 -- turns the same I/O action that we supplied to it. However, if it’s False , it
 -- returns the return () action, which doesn’t do anything.
 
+main :: IO ()
 main = do
   input <- getLine
   when (input == "SWORDFISH") $ do putStrLn input

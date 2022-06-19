@@ -1,22 +1,22 @@
 # Recursion
 
-Examples of some recursive functions
+Lets re-create some well known functions by using recursion.
 
 ## `maximum`
 
-The maximum function takes a list of things that can be put in order (i.e.,
+The `maximum` function takes a list of things that can be put in order (i.e.,
 instances of the Ord type class) and returns the largest of them.
 
 ```haskell
 maximum' :: (Ord a) => [a] -> a
 maximum' [] = error "Maximum of empty list"
 maximum' [x] = x
-maximum' (x : xs) = max x (maximum xs)
+maximum' (x : xs) = max x (maximum' xs)
 ```
 
 ## `replicate`
 
-replicate takes an Int and a value, and returns a list that has several repetitions of that value
+`replicate` takes an `Int` and a value, and returns a list that has several repetitions of that value
 
 ```haskell
 replicate' :: Int -> a -> [a]
@@ -27,7 +27,7 @@ replicate' n x
 
 ## `take`
 
-This function returns a specified number of elements from a specified list.
+The `take` function returns a specified number of elements from a specified list.
 
 ```haskell
 take' :: (Num i, Ord i) => i -> [a] -> [a]
@@ -39,7 +39,7 @@ take' n (x : xs) = x : take' (n - 1) xs
 
 ## `reverse`
 
-The reverse function takes a list and returns a list with the same elements, but in the reverse order.
+The `reverse` function takes a list and returns a list with the same elements, but in the reverse order.
 
 ```haskell
 reverse' :: [a] -> [a]
@@ -49,14 +49,14 @@ reverse' (x : xs) = reverse' xs ++ [x]
 
 ## `repeat`
 
-The repeat function takes an element and returns an infinite list composed of that element.
+The `repeat` function takes an element and returns an infinite list composed of that element.
 
 ```haskell
 repeat' :: a -> [a]
-repeat' x = x : repeat x
+repeat' x = x : repeat' x
 ```
 
-## `zip
+## `zip`
 
 zip takes two lists and zips them together.
 
@@ -80,6 +80,8 @@ elem' a (x : xs)
 ```
 
 ## `quicksort`
+
+The `quicksort` algorithm implemented in haskell.
 
 ```haskell
 quicksort :: (Ord a) => [a] -> [a]

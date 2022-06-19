@@ -1,5 +1,6 @@
 -- Another example with interact
 
+main :: IO ()
 main = interact respondPalindromes
 
 respondPalindromes :: String -> String

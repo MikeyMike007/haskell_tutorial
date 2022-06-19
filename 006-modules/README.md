@@ -4,7 +4,9 @@
 
 ### Import a whole module
 
-Import all functions in `Data.List`. In the example below, the function `nub` is used that takes any list and weeds out any duplicates.
+Import all functions in `Data.List`.
+
+In the example below, the function `nub` is used that takes any list and weeds out any duplicates.
 
 ```haskell
 import Data.List
@@ -63,8 +65,7 @@ Now you can call the filter function with `M.filter`.
 
 ### Counting words
 
-Suppose we have a string that contains a bunch of words, and we want to
-know how many times each word appears in the string.
+Suppose we have a string that contains a bunch of words, and we want to know how many times each word appears in the string.
 
 ```haskell
 wordNums :: String -> [(String, Int)]
@@ -150,13 +151,7 @@ This function is also already defined in `Data.List` as `isInfixOf`.
 
 ### Caesar Cipher Salad
 
-The Caesar cipher is a primitive method of
-encoding messages by shifting each character
-by a fixed number of positions in the alphabet.
-We can easily create a sort of Caesar cipher of
-our own, and we won’t constrict ourselves to the
-alphabet—we’ll use the whole range of Unicode
-characters.
+The Caesar cipher is a primitive method of encoding messages by shifting each character by a fixed number of positions in the alphabet. We can easily create a sort of Caesar cipher of our own, and we won’t constrict ourselves to the alphabet—we’ll use the whole range of Unicode characters.
 
 ```haskell
 import Data.Char
@@ -182,6 +177,8 @@ ghci> map ord "abcdefgh"
 [97,98,99,100,101,102,103,104]
 ```
 
+Examples of encoding messages,
+
 ```haskell
 ghci> encode 3 "hey mark"
 "kh|#pdun"
@@ -190,6 +187,8 @@ ghci> encode 5 "please instruct your men"
 ghci> encode 1 "to party hard"
 "up!qbsuz!ibse"
 ```
+
+Examples of decoding messages,
 
 ```haskell
 ghci> decode 3 "kh|#pdun"
@@ -202,19 +201,9 @@ ghci> decode 1 "up!qbsuz!ibse"
 
 ### On strict left folds
 
-Using foldl can sometimes lead to so-called stack overflow errors, which occur
-when your program uses too much space in a specific part of your computer’s
-memory.
+Using foldl can sometimes lead to so-called stack overflow errors, which occur when your program uses too much space in a specific part of your computer’s memory.
 
-This can happen due to that Haskell is lazy. And because Haskell is lazy, it
-defers actual computation of values for as long as possible. When we use foldl ,
-Haskell doesn’t compute (that is, evaluate) the actual accumulator on every
-step. Instead, it defers its evaluation. In the next step, it again doesn’t
-evaluate the accu- mulator, but defers the evaluation. It also keeps the old
-deferred computation in memory, be- cause the new one often refers to its
-result. Going forward, it builds up a bunch of deferred computations, each
-taking a not insignificant amount of memory. Eventually, this can cause a stack
-overflow error.
+This can happen due to that Haskell is lazy. And because Haskell is lazy, it defers actual computation of values for as long as possible. When we use foldl , Haskell doesn’t compute (that is, evaluate) the actual accumulator on every step. Instead, it defers its evaluation. In the next step, it again doesn’t evaluate the accu- mulator, but defers the evaluation. It also keeps the old deferred computation in memory, be- cause the new one often refers to its result. Going forward, it builds up a bunch of deferred computations, each taking a not insignificant amount of memory. Eventually, this can cause a stack overflow error.
 
 Example:
 
@@ -235,11 +224,7 @@ foldl (+) (((0 + 1) + 2) + 3) [] =
 3 + 3 =
 ```
 
-i.e. it first builds up a big stack of deferred computations. Then, once it
-reaches the empty list, it goes about actually evaluating those deferred
-computations. This isn’t a problem for small lists, but for large lists that
-contain upward of a million elements, you get a stack overflow, because
-evaluating all these deferred computations is done recursively.
+i.e. it first builds up a big stack of deferred computations. Then, once it reaches the empty list, it goes about actually evaluating those deferred computations. This isn’t a problem for small lists, but for large lists that contain upward of a million elements, you get a stack overflow, because evaluating all these deferred computations is done recursively.
 
 There is a function in `Data.List` called `foldl'` that solves this problem that evaluates the same expression `foldl' (+) 0 [1,2,3]` as
 
@@ -253,7 +238,7 @@ foldl' (+) 6 [] =
 
 ### Some cool numbers
 
-what’s the first natural number such that the sum of its digits equals `n`?”
+What’s the first natural number such that the sum of its digits equals `n`?”
 
 ```haskell
 firstTo :: Int -> Maybe Int
@@ -278,12 +263,7 @@ ghci> :t find
 find :: (a -> Bool) -> [a] -> Maybe a
 ```
 
-What about the return value in function `find`? It says Maybe a . That’s a type
-you haven’t met before. A value with a type of Maybe a is sort of like a list of
-type [a]. Whereas a list can have zero, one, or many elements, a Maybe a typed
-value can have ei- ther zero elements or just one element. We use it when we
-want to represent possible fail- ure. To make a value that holds nothing, we
-just use Nothing. Some examples,
+What about the return value in function `find`? It says Maybe a . That’s a type you haven’t met before. A value with a type of Maybe a is sort of like a list of type [a]. Whereas a list can have zero, one, or many elements, a Maybe a typed value can have ei- ther zero elements or just one element. We use it when we want to represent possible fail- ure. To make a value that holds nothing, we just use Nothing. Some examples,
 
 ```haskell
 ghci> Nothing
@@ -315,8 +295,7 @@ Nothing
 
 ## Mapping keys to values
 
-When dealing with data in some sort of collection, we often don’t care if it’s
-in some kind of order; we just want to be able to access it by a certain key.
+When dealing with data in some sort of collection, we often don’t care if it’s in some kind of order; we just want to be able to access it by a certain key.
 
 ### Association lists (dictionaries)
 
@@ -336,7 +315,7 @@ findKey :: (Eq k) => k -> [(k, v)] -> v
 findKey key = snd . head . filter (\(k, v) -> key == k)
 ```
 
-- If we dont find the key, it will return the head of an empty vector which throws a runtime error. Solution:
+As discussed, If we dont find the key, it will return the head of an empty vector which throws a runtime error. Following code provides a solution,
 
 ```haskell
 findKey' :: (Eq k) => k -> [(k, v)] -> Maybe v
@@ -346,12 +325,14 @@ findKey' key ((k, v) : xs)
   | otherwise = findKey' key xs
 ```
 
-With `fold`
+Same example but using `foldl`
 
 ```haskell
 findKey'' :: (Eq k) => k -> [(k, v)] -> Maybe v
 findKey'' key = foldr (\(k, v) acc -> if key == k then Just v else acc) Nothing
 ```
+
+Lets now use the function `findKey`
 
 ```haskell
 ghci> findKey "penny" phoneBook
@@ -366,12 +347,12 @@ Nothing
 
 ### Enter `Data.Map`
 
-- Data.Map module offers association lists that are much faster
-- Data.Map.fromList takes an association list and returns a map witht the same associations
+- `Data.Map` module offers association lists that are much faster
+- `Data.Map.fromList` takes an association list and returns a map witht the same associations
 - If there are duplicates keys in the orignal association list, the duplicates are discarded
-- Signature of `fromList`
-- Map.fromList :: (Ord k) => [(k, v)] -> Map.Map k v
-- It says it takes a list of pairs of type k and v and returns a map that maps from keys of type k to values of type v.
+- Signature of `fromList`: `Map.fromList :: (Ord k) => [(k, v)] -> Map.Map k v` It says it takes a list of pairs of type `k` and `v` and returns a `map` that maps from keys of type `k` to values of type `v`.
+
+Some examples,
 
 ```haskell
 import qualified Data.Map as Map
@@ -441,8 +422,7 @@ ghci> Map.size newBook
 7
 ```
 
-Suppose we would rather use lists of Int s to represent phone numbers. So,
-instead of having a number like "939-8282" , we want to have `[9,3,9,8,2,8,2]`.
+Suppose we would rather use lists of Int s to represent phone numbers. So, instead of having a number like "939-8282" , we want to have `[9,3,9,8,2,8,2]`,
 
 ```haskell
 string2digits :: String -> [Int]
@@ -463,8 +443,7 @@ ghci> Map.lookup "betty" intBook
 Just [5,5,5,2,9,3,8]
 ```
 
-Let’s extend our phone book. Say that a person can have several num-
-bers, and we have an association list set up like this:
+Let’s extend our phone book. Say that a person can have several numbers, and we have an association list set up like this:
 
 ```haskell
 phoneBook'' =
@@ -482,13 +461,9 @@ phoneBook'' =
 
 ```
 
-If we just use fromList to put that into a map, we’ll lose a few numbers!
-Instead, we’ll use another function found in Data.Map : fromListWith . This
-function acts like fromList , but instead of discarding duplicate keys, it uses a function supplied to it to decide what to do with them
+If we just use `fromList` to put that into a `map`, we’ll lose a few numbers! Instead, we’ll use another function found in `Data.Map` : `fromListWith` . This function acts like `fromList` , but instead of discarding duplicate keys, it uses a function supplied to it to decide what to do with them
 
-If fromListWith finds that the key is already there, it uses the function sup-
-plied to it to join those two values into one and replaces the old value with
-the one it got by passing the conflicting values to the function.
+If `fromListWith` finds that the key is already there, it uses the function supplied to it to join those two values into one and replaces the old value with the one it got by passing the conflicting values to the function.
 
 ```haskell
 phoneBookToMap :: (Ord k) => [(k, String)] -> Map.Map k String
@@ -521,7 +496,7 @@ ghci> Map.lookup "patsy" $ phoneBookToMap phoneBook
 ["827-9162","943-2929","493-2928"]
 ```
 
-Another example is when we’re making a map from an association list of numbers,and when a duplicate key is found, we want the biggest value for the key to be kept.
+Another example is when we’re making a map from an association list of numbers, and when a duplicate key is found, we want the biggest value for the key to be kept.
 
 ```haskell
 ghci> Map.fromListWith max [(2,3),(2,5),(2,100),(3,29),(3,22),(3,11),(4,22),(4,15)]

@@ -3,6 +3,7 @@
 -- “stringify” it, and then outputs that string to the terminal. Basically, it’s
 -- just putStrLn . show. It first runs show on a value, and then feeds that to
 -- putStrLn, which returns an I/O action that will print out our value.
+main :: IO ()
 main = do
   print True
   print 2

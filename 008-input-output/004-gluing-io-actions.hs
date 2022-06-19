@@ -1,6 +1,7 @@
 -- # Gluing I/O Actions
 --
 
+main :: IO ()
 main = do
   putStrLn "Please write something: "
   sentence <- getLine

@@ -26,6 +26,7 @@ import Data.Char
 --   This repeats until there’s no more input, which is signified by an end-of-file
 --   character.
 
+main :: IO ()
 main = do
   contents <- getContents
   putStrLn $ map toUpper contents

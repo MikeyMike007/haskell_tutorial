@@ -1,7 +1,7 @@
-import Control.Exception
-import Data.List
-import System.Directory
-import System.IO
+import Control.Exception ( bracketOnError )
+import Data.List ( delete )
+import System.Directory ( removeFile, renameFile )
+import System.IO ( hClose, hPutStr, openTempFile )
 
 main = do
   contents <- readFile "todo.txt"
