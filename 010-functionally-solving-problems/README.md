@@ -1,3 +1,41 @@
+# Functionally solving problems
+
+## Reverse Polish Notation Calculator
+
+Lets create a calculator that can handle syntax like `3 4 + = 7`,
+
+```haskell
+solveRPN :: String -> Double
+solveRPN = head . foldl foldingFunction [] . words
+  where
+    -- Syntax: foldingFunction currentStack currentItem
+    foldingFunction (x : y : ys) "*" = (y * x) : ys
+    foldingFunction (x : y : ys) "+" = (y + x) : ys
+    foldingFunction (x : y : ys) "-" = (y - x) : ys
+    foldingFunction (x : y : ys) "/" = (y / x) : ys
+    foldingFunction (x : y : ys) "^" = (y ** x) : ys
+    foldingFunction (x : xs) "ln" = log x : xs
+    foldingFunction xs "sum" = [sum xs]
+    foldingFunction xs numberString = read numberString : xs
+```
+
+Lets see what is happening when the program solves for `solveRPN 10 4 3 + 2 * -`
+
+```bash
+0)  words "10 4 3 + 2 * -" = ["10", "4", "3", "+", "2", "*", "-"]
+1)  stack: [] - item: "10"
+2)  stack: [10] - item: "4"
+3)  stack: [4, 10] - item "3"
+4)  stack: [3, 4, 10] - item "+"
+5)  stack: [7, 10] - item "2"
+6)  stack [2, 7, 10] - item "*"
+7)  stack [14, 10] - item "-"
+8)  stack [-4]
+```
+
+## Shortest path algorithm
+
+```haskell
 import Data.List ()
 
 -- # Shortest path
@@ -78,3 +116,5 @@ main = do
       pathTime = sum $ map snd path
   putStrLn $ "The best path to take is: " ++ pathString
   putStrLn $ "Time taken: " ++ show pathTime
+
+```

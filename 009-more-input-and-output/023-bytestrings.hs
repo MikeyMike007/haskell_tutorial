@@ -127,11 +127,11 @@
 --  the first file into the second file
 --
 
-import Control.Exception
+import Control.Exception ( bracketOnError )
 import qualified Data.ByteString as B
-import System.Directory
-import System.Environment
-import System.IO
+import System.Directory ( removeFile, renameFile )
+import System.Environment ( getArgs )
+import System.IO ( hClose, openTempFile )
 
 main = do
   (filename1 : filename2 : _) <- getArgs

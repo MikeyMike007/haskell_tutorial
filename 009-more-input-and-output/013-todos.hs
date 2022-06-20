@@ -3,6 +3,7 @@ import Data.List ( delete )
 import System.Directory ( removeFile, renameFile )
 import System.IO ( hClose, hPutStr, openTempFile )
 
+main :: IO ()
 main = do
   contents <- readFile "todo.txt"
   let todoTasks = lines contents

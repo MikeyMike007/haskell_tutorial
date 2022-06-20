@@ -1,6 +1,7 @@
-import Data.List
-import System.Environment
+import Data.List ()
+import System.Environment ( getArgs, getProgName )
 
+main :: IO ()
 main = do
   args <- getArgs
   progName <- getProgName

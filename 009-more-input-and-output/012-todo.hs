@@ -1,6 +1,6 @@
-import Data.List
-import System.Directory
-import System.IO
+import Data.List ( delete )
+import System.Directory ( removeFile, renameFile )
+import System.IO ( hClose, hPutStr, openTempFile )
 
 main = do
   contents <- readFile "todo.txt"

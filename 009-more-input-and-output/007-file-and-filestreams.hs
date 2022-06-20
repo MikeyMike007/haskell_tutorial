@@ -11,7 +11,7 @@
 --   handle gets closed.
 
 import Control.Exception (handle)
-import System.IO
+import System.IO ( hGetContents, withFile, IOMode(ReadMode) )
 
 main = do
   withFile

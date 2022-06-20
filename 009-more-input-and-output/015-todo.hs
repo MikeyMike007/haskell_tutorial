@@ -1,7 +1,7 @@
-import Data.List
-import System.Directory
-import System.Environment
-import System.IO
+import Data.List ( delete )
+import System.Directory ( removeFile, renameFile )
+import System.Environment ( getArgs )
+import System.IO ( hClose, hPutStr, openTempFile )
 
 dispatch :: String -> [String] -> IO ()
 dispatch "add" = add

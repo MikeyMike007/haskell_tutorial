@@ -21,8 +21,9 @@
 --   takes a file handle and does stuff with that handle, like reading from or writ-
 --   ing to the corresponding file
 
-import Control.Exception
+import Control.Exception ( bracket )
 import System.IO
+    ( Handle, hClose, openFile, hGetContents, IOMode(ReadMode) )
 
 main = do
   withFile'
